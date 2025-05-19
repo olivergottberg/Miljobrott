@@ -1,0 +1,58 @@
+@using Miljoboven4.ViewModels
+
+@model ManagerViewModel
+
+@{
+    Layout = "_ManagerLayout";
+}
+
+<!-- Startsidan för chefer där alla ärenden visas -->
+
+<h2>Ärenden</h2>
+<p class="info">Du är inloggad som avdelningschef</p>
+
+<!-- Filtrering av ärenden -->
+<form asp-action ="StartManager" asp-controller="Manager" method="post">
+	<table id="managerForm">
+		<tr>
+			<td class="label">Välj status:</td>
+			<td class="label">Välj handläggare:</td>
+			<td>&nbsp;</td>
+			<td class="label">Ärendenummer:</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<select name="status">
+					<option selected="selected">Välj alla</option>
+
+					@foreach (var status in Model.ErrandStatuses)
+					{
+						<option value="@status.StatusName">@status.StatusName</option>
+					}
+				</select>
+			</td>
+			<td>
+				<select name="investigator">
+					<option selected="selected">Välj alla</option>
+
+					@foreach (var employee in Model.Employees)
+					{
+						<option value="@employee.EmployeeName">@employee.EmployeeName</option>
+					}
+				</select>
+			</td>
+			<td><input class="button" type="submit" value="Hämta lista" /></td>
+			<td><input name="casenumber" placeholder="Sök efter ärendenummer"/></td>
+			<td><input class="button" type="submit" value="Sök" /></td>
+		</tr>
+	</table>
+</form>
+
+<!-- Nedan ser man en lista på ärenden, hämtas med ErrandTable ViewComponent -->
+@await Component.InvokeAsync("ErrandTable", new
+	{
+		errands = Model.Errands,
+		controller = "Manager",
+		action = "CrimeManager"
+	})
