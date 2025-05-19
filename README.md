@@ -1,4 +1,4 @@
-# Miljöboven 🌱
+# Miljöbrott 🌱
 
 En .NET-applikation för att rapportera miljöbrott.
 Omvandlat en statisk HTML-sida med hjälp av .NET.
